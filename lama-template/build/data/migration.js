@@ -1,6 +1,7 @@
-import { connection } from "./connection";
-
-connection.raw(`
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const connection_1 = require("./connection");
+connection_1.connection.raw(`
     CREATE TABLE IF NOT EXISTS LAMA_music_Bands (
         id VARCHAR(255) PRIMARY KEY,
         name VARCHAR(255) UNIQUE NOT NULL,
@@ -29,5 +30,6 @@ connection.raw(`
 }).catch(error => {
     console.log(error.sqlMessage || error.message);
 }).finally(() => {
-    connection.destroy()
-})
+    connection_1.connection.destroy();
+});
+//# sourceMappingURL=migration.js.map
