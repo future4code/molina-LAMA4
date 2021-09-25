@@ -42,5 +42,5 @@ class UserDatabase extends BaseDatabase_1.BaseDatabase {
     }
 }
 exports.UserDatabase = UserDatabase;
-UserDatabase.TABLE_NAME = "";
+UserDatabase.TABLE_NAME = "LAMA_users";
 //# sourceMappingURL=UserDatabase.js.map
