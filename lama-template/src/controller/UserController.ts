@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { UserInputDTO, LoginInputDTO } from "../model/User";
 import { UserBusiness } from "../business/UserBusiness";
 import { BaseDatabase } from "../data/BaseDatabase";
-import { createLogicalNot } from "typescript";
 
 export class UserController {
     async signup(req: Request, res: Response) {
@@ -23,6 +22,8 @@ export class UserController {
             ) {
                 throw new Error('Preencha todos os campos ')
             }
+
+           
 
             const userBusiness = new UserBusiness();
             const token = await userBusiness.createUser(input);
@@ -45,6 +46,7 @@ export class UserController {
                 password: req.body.password
             };
 
+
             if (!loginData.email || loginData.password) {
                 throw new Error("Preencha todos os campos!");
 
@@ -52,6 +54,19 @@ export class UserController {
 
             const userBusiness = new UserBusiness();
             const token = await userBusiness.getUserByEmail(loginData);
+
+            const userWithEmail = userBusiness.getUserByEmail(loginData.email)
+
+            if (userWithEmail) {
+                throw new Error('Usuário já cadastrado.')
+            }
+
+            if (!token) {
+                throw new Error('Usuário não cadastrado.')
+    
+            }
+
+            
 
             res.status(200).send({ token });
 

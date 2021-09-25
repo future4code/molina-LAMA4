@@ -23,7 +23,7 @@ export class UserBusiness {
         return accessToken;
     }
 
-    async getUserByEmail(user: LoginInputDTO) {
+    async getUserByEmail(user) {
 
         const userDatabase = new UserDatabase();
         const userFromDB = await userDatabase.getUserByEmail(user.email);
