@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { UserInputDTO, LoginInputDTO} from "../model/User";
+import { UserInputDTO, LoginInputDTO } from "../model/User";
 import { UserBusiness } from "../business/UserBusiness";
 import { BaseDatabase } from "../data/BaseDatabase";
 
@@ -13,6 +13,17 @@ export class UserController {
                 password: req.body.password,
                 role: req.body.role
             }
+
+            if (
+                !input.name ||
+                !input.email ||
+                !input.password ||
+                !input.role
+            ) {
+                throw new Error('Preencha todos os campos ')
+            }
+
+           
 
             const userBusiness = new UserBusiness();
             const token = await userBusiness.createUser(input);
@@ -35,8 +46,27 @@ export class UserController {
                 password: req.body.password
             };
 
+
+            if (!loginData.email || loginData.password) {
+                throw new Error("Preencha todos os campos!");
+
+            }
+
             const userBusiness = new UserBusiness();
             const token = await userBusiness.getUserByEmail(loginData);
+
+            const userWithEmail = userBusiness.getUserByEmail(loginData.email)
+
+            if (userWithEmail) {
+                throw new Error('Usuário já cadastrado.')
+            }
+
+            if (!token) {
+                throw new Error('Usuário não cadastrado.')
+    
+            }
+
+            
 
             res.status(200).send({ token });
 

@@ -6,7 +6,15 @@ import { Authenticator } from "../services/Authenticator";
 
 export class UserBusiness {
 
-    async createUser(user: UserInputDTO) {
+    async createUser(user) {
+
+        if(user.email.indexOf("@") === -1) {
+            throw new Error("Invalid email format")
+        }
+
+        if(user.password.length < 6) {
+            throw new Error("Password should have more than 6 digits")
+        }
 
         const idGenerator = new IdGenerator();
         const id = idGenerator.generate();
@@ -23,7 +31,7 @@ export class UserBusiness {
         return accessToken;
     }
 
-    async getUserByEmail(user: LoginInputDTO) {
+    async getUserByEmail(user) {
 
         const userDatabase = new UserDatabase();
         const userFromDB = await userDatabase.getUserByEmail(user.email);

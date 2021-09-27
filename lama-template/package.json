@@ -4,6 +4,7 @@
   "description": "Template para o projeto LAMA",
   "main": "index.js",
   "scripts": {
+    "test": "echo \"Starting tests...\" && jest",
     "start": "tsc && node ./build/index.js",
     "migration": "tsc && node ./build/data/migration.js",
     "dev": "ts-node-dev ./src/index.ts"
