@@ -3,7 +3,7 @@ import { Band } from "../model/Band";
 
 export class BandDatabase extends BaseDatabase{
 
-    static TABLE_NAME = "LAMA_music_Bands";
+    private static TABLE_NAME = "LAMA_music_Bands";
 
     public async createBand(band:Band): Promise<void>{
         try {
